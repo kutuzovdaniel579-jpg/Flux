@@ -11,5 +11,5 @@ could just look in the settings of the browser
 
 Note that this is just an tab,
 We higly recommend using Microsoft Edge
-And installation tutorial could be found as INSTALtut.txt
-Hope yall have fun with Flux
+
+Also note that this is un useable at the time
