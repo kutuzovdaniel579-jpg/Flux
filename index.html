@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" id="html-root">
+<head id="head-root">
+  <meta charset="utf-8" id="meta-charset">
+  <meta name="viewport" content="width=device-width, initial-scale=1" id="meta-viewport">
+  <title id="title-text">Flux | DEV VERSION</title>
+  <link rel="icon" type="image/png" href="FluxLogo.png">
+
+  <style id="style-global">
+    :root { --bg:#0f1320; --panel:#1a2033; --accent:#6aa8ff; --text:#e8eefc; --muted:#aab4d4; }
+    * { box-sizing:border-box }
+    html, body { height:100%; }
+    body#body-root {
+      margin:0; background:var(--bg); color:var(--text);
+      font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+      display:flex; flex-direction:column;
+    }
+    /* Top bar */
+    #topbar-root {
+      display:flex; align-items:center; gap:10px; padding:10px 16px;
+      background:linear-gradient(90deg, #151a2a, #1b2338);
+      border-bottom:1px solid #202a43; position:sticky; top:0; z-index:50;
+    }
+    #topbar-logo { width:28px; height:28px; border-radius:6px; background:#263355; display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+    #topbar-title { font-size:15px; font-weight:600 }
+    #topbar-spacer { flex:1 }
+    #topbar-btn-settings, #topbar-btn-theme, #topbar-btn-refresh {
+      background:#253154; border:0; color:var(--text); padding:8px 10px; border-radius:8px; cursor:pointer;
+    }
+    #topbar-btn-settings:hover, #topbar-btn-theme:hover, #topbar-btn-refresh:hover { background:#2b3863 }
+
+    /* Content layout: alles onder elkaar */
+    #content-root {
+      width:100%; max-width:1100px; margin:24px auto; padding:0 16px;
+      display:flex; flex-direction:column; gap:20px;
+    }
+
+    /* Panels */
+    #search-panel, #quicklinks-panel, #widgets-panel {
+      background:var(--panel); border:1px solid #223052; border-radius:14px; padding:14px;
+    }
+    #search-title, #quicklinks-title, #widgets-title { margin:0 0 10px 0; font-size:16px; font-weight:600 }
+
+    /* Search */
+    #search-form { display:flex; gap:8px }
+    #search-input {
+      flex:1; padding:12px; border:1px solid #2a3a5f; border-radius:10px; background:#11182b; color:var(--text);
+    }
+    #search-engine { padding:12px; border:1px solid #2a3a5f; border-radius:10px; background:#11182b; color:var(--text); }
+    #search-button {
+      padding:12px 14px; border:0; border-radius:10px; background:var(--accent); color:#0b1222; font-weight:700; cursor:pointer;
+    }
+
+    /* Quick links */
+    #quicklinks-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap:10px; }
+    .quicklink-item { display:flex; flex-direction:column; align-items:center; gap:8px; padding:10px; background:#121a2d; border:1px solid #25345a; border-radius:12px; text-decoration:none; color:var(--text); }
+    .quicklink-item:hover { border-color:#34508a; transform:translateY(-1px); }
+    .quicklink-icon { width:28px; height:28px; border-radius:6px; background:#263355; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+    .quicklink-label { font-size:12px; color:var(--muted) }
+
+    /* Widgets */
+    #widget-clock, #widget-notes { background:#121a2d; border:1px solid #25345a; border-radius:12px; padding:12px }
+    #clock-time { font-size:28px; font-weight:700 }
+    #notes-textarea { width:100%; min-height:120px; background:#0f162a; color:var(--text); border:1px solid #25345a; border-radius:10px; padding:10px }
+
+    /* Footer */
+    #footer-root { margin:24px auto; padding:10px 16px; color:#92a2c9; font-size:12px }
+    #footer-links { display:flex; gap:12px }
+    #footer-link-about, #footer-link-privacy, #footer-link-reset { color:#92a2c9; text-decoration:none; cursor:pointer }
+  </style>
+</head>
+
+<body id="body-root">
+  <!-- Top bar -->
+  <header id="topbar-root">
+    <div id="topbar-logo">FX</div>
+    <div id="topbar-title">Flux [DEV VERSION]</div>
+    <div id="topbar-spacer"></div>
+    <button id="topbar-btn-refresh" type="button">Refresh</button>
+    <button id="topbar-btn-theme" type="button">Toggle Theme</button>
+    <button id="topbar-btn-settings" type="button">Settings</button>
+  </header>
+
+  <!-- Main content -->
+  <main id="content-root">
+    <!-- Search -->
+    <section id="search-panel">
+      <h2 id="search-title">Search</h2>
+      <form id="search-form" action="#" method="get">
+        <input id="search-input" name="q" type="text" placeholder="Search the web…">
+        <select id="search-engine" name="engine">
+          <option value="google">Google</option>
+          <option value="duckduckgo">DuckDuckGo</option>
+          <option value="brave">Brave</option>
+          <option value="edge">Edge</option>
+        </select>
+        <button id="search-button" type="submit">Go</button>
+      </form>
+    </section>
+
+    <!-- Quick links -->
+    <section id="quicklinks-panel">
+      <h2 id="quicklinks-title">Quick links</h2>
+      <div id="quicklinks-grid">
+        <a class="quicklink-item" href="https://github.com" target="_blank" rel="noopener">
+          <div class="quicklink-icon">GH</div><div class="quicklink-label">GitHub</div>
+        </a>
+        <a class="quicklink-item" href="https://www.google.com" target="_blank" rel="noopener">
+          <div class="quicklink-icon">G</div><div class="quicklink-label">Google</div>
+        </a>
+        <a class="quicklink-item" href="https://www.youtube.com" target="_blank" rel="noopener">
+          <div class="quicklink-icon">YT</div><div class="quicklink-label">YouTube</div>
+        </a>
+        <a class="quicklink-item" href="https://huggingface.co" target="_blank" rel="noopener">
+          <div class="quicklink-icon">HF</div><div class="quicklink-label">Hugging Face</div>
+        </a>
+        <a class="quicklink-item" href="https://discord.com" target="_blank" rel="noopener">
+          <div class="quicklink-icon">DC</div><div class="quicklink-label">Discord</div>
+        </a>
+        <a class="quicklink-item" href="https://proton.me" target="_blank" rel="noopener">
+          <div class="quicklink-icon">PR</div><div class="quicklink-label">Proton</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Widgets onder Search & Quick Links -->
+    <section id="widgets-panel">
+      <h2 id="widgets-title">Widgets</h2>
+      <div id="widget-clock">
+        <div id="clock-title">Clock</div>
+        <div id="clock-time">--:--:--.---</div>
+      </div>
+      <div id="widget-notes">
+        <div id="notes-title">Notes</div>
+        <textarea id="notes-textarea" placeholder="Write notes…"></textarea>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer-root">
+    <div id="footer-text">Flux · DEV VERSION · v0.1.0</div>
+    <nav id="footer-links">
+      <a id="footer-link-about" href="/about" target="_self">About</a>
+      <a id="footer-link-privacy" href="/privacy" target="_self">Privacy</a>
+      <span id="footer-link-reset">Reset</span>
+    </nav>
+  </footer>
+
+  <script id="script-main">
+    // Central registry for IDs (quick lookup / future validations)
+    const IDS = {
+      root: 'html-root',
+      topbar: 'topbar-root',
+      searchInput: 'search-input',
+      searchEngine: 'search-engine',
+      quicklinksGrid: 'quicklinks-grid',
+      clockTime: 'clock-time',
+      notesTextarea: 'notes-textarea'
+    };
+
+    // Theme toggler
+    const elThemeBtn = document.getElementById('topbar-btn-theme');
+    const elBody = document.getElementById('body-root');
+    elThemeBtn.addEventListener('click', () => {
+      const dark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#0f1320';
+      if (dark) {
+        document.documentElement.style.setProperty('--bg', '#f4f6fb');
+        document.documentElement.style.setProperty('--panel', '#ffffff');
+        document.documentElement.style.setProperty('--text', '#1b2338');
+        document.documentElement.style.setProperty('--muted', '#5c6b92');
+      } else {
+        document.documentElement.style.setProperty('--bg', '#0f1320');
+        document.documentElement.style.setProperty('--panel', '#1a2033');
+        document.documentElement.style.setProperty('--text', '#e8eefc');
+        document.documentElement.style.setProperty('--muted', '#aab4d4');
+      }
+    });
+
+    // Refresh button
+    document.getElementById('topbar-btn-refresh').addEventListener('click', () => location.reload());
+
+       // Settings button (hook point)
+    document.getElementById('topbar-btn-settings').addEventListener('click', () => {
+        window.location.href = "http://192.168.0.103:7777/settings/";
+    });
+
+
+    // Clock updater
+    function updateClock() {
+      const el = document.getElementById('clock-time');
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2,'0');
+      const mm = String(d.getMinutes()).padStart(2,'0');
+      const ss = String(d.getSeconds()).padStart(2,'0');
+      const ms = String(d.getMilliseconds()).padStart(2,'0');
+      el.textContent = `${hh}:${mm}:${ss}:${ms}`;
+    }
+    updateClock();
+    setInterval(updateClock, 25);
+
+    // Search handler
+    document.getElementById('search-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = document.getElementById('search-input').value.trim();
+      const engine = document.getElementById('search-engine').value;
+      if (!q) return;
+      const urls = {
+        google: `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+        duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+        brave: `https://search.brave.com/search?q=${encodeURIComponent(q)}`
+      };
+      window.location.href = urls[engine] || urls.google;
+    });
+
+    // Reset footer action
+    document.getElementById('footer-link-reset').addEventListener('click', () => {
+      if (confirm('Reset notes and UI?')) {
+        document.getElementById('notes-textarea').value = '';
+        alert('Reset done.');
+      }
+    });
+  </script>
+</body>
+</html>
