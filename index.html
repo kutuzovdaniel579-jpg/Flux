@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" id="html-root">
+<head id="head-root">
+  <meta charset="utf-8" id="meta-charset">
+  <meta name="viewport" content="width=device-width, initial-scale=1" id="meta-viewport">
+  <title id="title-text">Flux| Settings</title>
+  <link rel="icon" type="image/png" href="FluxLogo.png">
+
+
+  <style id="style-global">
+    :root { --bg:#0f1320; --panel:#1a2033; --accent:#6aa8ff; --text:#e8eefc; --muted:#aab4d4; }
+    * { box-sizing:border-box }
+    html, body { height:100%; }
+    body#body-root {
+      margin:0; background:var(--bg); color:var(--text);
+      font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+      display:flex; flex-direction:column;
+    }
+    /* Top bar */
+    #topbar-root {
+      display:flex; align-items:center; gap:10px; padding:10px 16px;
+      background:linear-gradient(90deg, #151a2a, #1b2338);
+      border-bottom:1px solid #202a43; position:sticky; top:0; z-index:50;
+    }
+    #topbar-logo { width:28px; height:28px; border-radius:6px; background:#263355; display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+    #topbar-title { font-size:15px; font-weight:600 }
+    #topbar-spacer { flex:1 }
+    #topbar-btn-settings, #topbar-btn-theme, #topbar-btn-refresh {
+      background:#253154; border:0; color:var(--text); padding:8px 10px; border-radius:8px; cursor:pointer;
+    }
+    #topbar-btn-settings:hover, #topbar-btn-theme:hover, #topbar-btn-refresh:hover { background:#2b3863 }
+
+    /* Content layout */
+    #content-root { width:100%; max-width:1100px; margin:24px auto; padding:0 16px; display:grid; grid-template-columns: 1.2fr 0.8fr; gap:20px; }
+    #column-left, #column-right { display:flex; flex-direction:column; gap:20px }
+
+    /* Search */
+    #search-panel { background:var(--panel); border:1px solid #223052; border-radius:14px; padding:14px }
+    #search-title { margin:0 0 10px 0; font-size:16px; font-weight:600 }
+    #search-form { display:flex; gap:8px }
+    #search-input {
+      flex:1; padding:12px; border:1px solid #2a3a5f; border-radius:10px; background:#11182b; color:var(--text);
+    }
+    #search-engine { padding:12px; border:1px solid #2a3a5f; border-radius:10px; background:#11182b; color:var(--text); }
+    #search-button {
+      padding:12px 14px; border:0; border-radius:10px; background:var(--accent); color:#0b1222; font-weight:700; cursor:pointer;
+    }
+
+    /* Quick links */
+    #quicklinks-panel { background:var(--panel); border:1px solid #223052; border-radius:14px; padding:14px }
+    #quicklinks-title { margin:0 0 10px 0; font-size:16px; font-weight:600 }
+    #quicklinks-grid {
+      display:grid; grid-template-columns: repeat(6, 1fr); gap:10px;
+    }
+    .quicklink-item { display:flex; flex-direction:column; align-items:center; gap:8px; padding:10px; background:#121a2d; border:1px solid #25345a; border-radius:12px; text-decoration:none; color:var(--text); }
+    .quicklink-item:hover { border-color:#34508a; transform:translateY(-1px); }
+    .quicklink-icon { width:28px; height:28px; border-radius:6px; background:#263355; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+    .quicklink-label { font-size:12px; color:var(--muted) }
+
+    /* Widgets */
+    #widgets-panel { background:var(--panel); border:1px solid #223052; border-radius:14px; padding:14px }
+    #widgets-title { margin:0 0 10px 0; font-size:16px; font-weight:600 }
+    #widget-clock, #widget-notes { background:#121a2d; border:1px solid #25345a; border-radius:12px; padding:12px }
+    #clock-time { font-size:28px; font-weight:700 }
+    #notes-textarea { width:100%; min-height:120px; background:#0f162a; color:var(--text); border:1px solid #25345a; border-radius:10px; padding:10px }
+
+    /* Footer */
+    #footer-root { margin:24px auto; padding:10px 16px; color:#92a2c9; font-size:12px }
+    #footer-links { display:flex; gap:12px }
+    #footer-link-about, #footer-link-privacy, #footer-link-reset { color:#92a2c9; text-decoration:none }
+    #footer-link-reset { cursor:pointer }
+  </style>
+</head>
+
+<body id="body-root">
+  <!-- Top bar -->
+  <header id="topbar-root">
+    <div id="topbar-logo">FX</div>
+    <div id="topbar-title">Flux [DEV VERSION]</div>
+    <div id="topbar-spacer"></div>
+    <button id="topbar-btn-refresh" type="button">Refresh</button>
+    <button id="topbar-btn-theme" type="button">Toggle Theme</button>
+    <button id="topbar-btn-settings" type="button">Back</button>
+  </header>
+
+<div id="clock-settings">
+  <button id="toggle-ms">Toggle Milliseconds</button>
+  <button id="toggle-sec">Toggle Seconds</button>
+</div>
+
+<div id="clock-time"></div>
+
+<script id="script-main">
+    // Central registry for IDs (quick lookup / future validations)
+    const IDS = {
+      root: 'html-root',
+      topbar: 'topbar-root',
+      searchInput: 'search-input',
+      searchEngine: 'search-engine',
+      quicklinksGrid: 'quicklinks-grid',
+      clockTime: 'clock-time',
+      notesTextarea: 'notes-textarea'
+    };
+
+    // Theme toggler
+    const elThemeBtn = document.getElementById('topbar-btn-theme');
+    const elBody = document.getElementById('body-root');
+    elThemeBtn.addEventListener('click', () => {
+      const dark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#0f1320';
+      if (dark) {
+        document.documentElement.style.setProperty('--bg', '#f4f6fb');
+        document.documentElement.style.setProperty('--panel', '#ffffff');
+        document.documentElement.style.setProperty('--text', '#1b2338');
+        document.documentElement.style.setProperty('--muted', '#5c6b92');
+      } else {
+        document.documentElement.style.setProperty('--bg', '#0f1320');
+        document.documentElement.style.setProperty('--panel', '#1a2033');
+        document.documentElement.style.setProperty('--text', '#e8eefc');
+        document.documentElement.style.setProperty('--muted', '#aab4d4');
+      }
+    });
+
+    // Refresh button
+    document.getElementById('topbar-btn-refresh').addEventListener('click', () => location.reload());
+
+       // Back button (hook point)
+    document.getElementById('topbar-btn-settings').addEventListener('click', () => {
+        window.location.href = "http://192.168.0.103:7777/main/";
+    });
+
+    // Reset footer action
+    document.getElementById('footer-link-reset').addEventListener('click', () => {
+      if (confirm('Reset notes and UI?')) {
+        document.getElementById('notes-textarea').value = '';
+        alert('Reset done.');
+      }
+    });
+  </script>
+</body>
+</html>
