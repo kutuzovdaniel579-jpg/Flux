@@ -1,7 +1,7 @@
 # 🌐 Flux Browser ![Alt text](https://kutuzovdaniel579-jpg.github.io/Flux/main/FluxLogo.png)
 
 [![Build](https://img.shields.io/badge/Linktree-seagreen)](https://linktr.ee/Daniel.7777)
-[![Flux](https://img.shields.io/badge/Flux-navy)](https://kutuzovdaniel579-jpg.github.io/Flux/main/) [![Browser](https://img.shields.io/badge/Browser-royalblue)](https://kutuzovdaniel579-jpg.github.io/Flux/main/)
+[![Flux](https://img.shields.io/badge/Flux:-navy)](https://kutuzovdaniel579-jpg.github.io/Flux/main/) [![Browser](https://img.shields.io/badge/Browser-royalblue)](https://kutuzovdaniel579-jpg.github.io/Flux/main/)
 
 
 Flux is a **fast and secure web browser** built with a focus on **performance, privacy, and simplicity**.  
