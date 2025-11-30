@@ -25,5 +25,6 @@ git clone https://github.com/Flux/Flux.git
 cd Flux
 
 
-```
+---
 note we only have dutch version at the time
+---
