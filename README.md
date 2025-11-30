@@ -11,10 +11,17 @@ Currently, Flux is in **Dev version 0.1.0.0**, which means the core functionalit
 
 ---
 
+## 🔤Laungauge
+We currently only support Dutch as laungauge
+after Dev version we will include the English laungauge 
+in website and eventually browser
+
+---
+
 ## 📦 Installation
 Since Flux is still in the **Dev phase**, no official builds are available yet.
 U could look at the current website thats gonna be the base of the browser
-https://kutuzovdaniel579-jpg.github.io/Flux/
+https://kutuzovdaniel579-jpg.github.io/Flux/main/
 
 or
 
@@ -23,8 +30,4 @@ You can download the source code and build it yourself:
 ```bash
 git clone https://github.com/Flux/Flux.git
 cd Flux
-
-
----
-note we only have dutch version at the time
----
+```
