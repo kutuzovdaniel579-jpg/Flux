@@ -1,7 +1,7 @@
 # 🌐 Flux Browser ![Alt text](https://kutuzovdaniel579-jpg.github.io/Flux/main/FluxLogo.png)
 
 [![Build](https://img.shields.io/badge/Linktree-seagreen)](https://linktr.ee/Daniel.7777)
-[![Build](https://img.shields.io/badge/Flux-royalblue)](https://kutuzovdaniel579-jpg.github.io/Flux/main/)
+[![Build](https://img.shields.io/badge/Flux:-Browser-royalblue)](https://kutuzovdaniel579-jpg.github.io/Flux/main/)
 
 Flux is a **fast and secure web browser** built with a focus on **performance, privacy, and simplicity**.  
 Currently, Flux is in **Dev version 0.1.0.0**, which means the core functionality is present, but new features and optimizations are still under active development.
