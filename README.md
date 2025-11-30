@@ -31,7 +31,3 @@ You can download the source code and build it yourself:
 git clone https://github.com/Flux/Flux.git
 cd Flux
 ```
-
-- [x] Done
-- [ ] Todo
-
