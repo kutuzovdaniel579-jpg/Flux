@@ -31,3 +31,7 @@ You can download the source code and build it yourself:
 git clone https://github.com/Flux/Flux.git
 cd Flux
 ```
+
+[Text](https://youtube.com)
+![Alt text](https://kutuzovdaniel579-jpg.github.io/Flux/main/FluxLogo.png)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
