@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" id="html-root">
+<head id="head-root">
+  <meta charset="utf-8" id="meta-charset">
+  <meta name="viewport" content="width=device-width, initial-scale=1" id="meta-viewport">
+  <title id="title-text">Flux | About</title>
+  <link rel="icon" type="image/png" href="FluxLogo.png">
+
+  <!-- Basic, clean typography and layout -->
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0b0d12;
+      --fg: #e9eef5;
+      --muted: #a9b4c0;
+      --accent: #5ac8fa;
+      --card: #12151c;
+      --border: #1e2430;
+      --code-bg: #0f1320;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--fg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--card);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand img { width: 28px; height: 28px; border-radius: 6px; }
+    .brand-title { font-weight: 600; letter-spacing: 0.2px; }
+    nav { display: flex; gap: 14px; }
+    main {
+      max-width: 900px; margin: 28px auto; padding: 0 20px;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px;
+    }
+    .muted { color: var(--muted); }
+    footer {
+      margin: 40px 0; padding: 16px 20px; text-align: center; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    /* Markdown content styling */
+    .markdown h1, .markdown h2, .markdown h3 { margin-top: 1.2em; }
+    .markdown pre, .markdown code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    .markdown pre {
+      background: var(--code-bg); padding: 14px; border-radius: 10px; overflow: auto;
+      border: 1px solid var(--border);
+    }
+    .markdown blockquote {
+      border-left: 3px solid var(--border); margin: 1em 0; padding: 0.6em 1em; color: var(--muted);
+      background: rgba(255,255,255,0.02);
+    }
+    .markdown table {
+      border-collapse: collapse; width: 100%; margin: 1em 0; overflow: auto;
+    }
+    .markdown th, .markdown td {
+      border: 1px solid var(--border); padding: 8px 10px; text-align: left;
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(90,200,250,0.12); color: var(--accent); border: 1px solid rgba(90,200,250,0.3);
+      padding: 6px 10px; border-radius: 999px; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="FluxLogo.png" alt="Flux logo" loading="lazy">
+      <span class="brand-title">Flux Browser</span>
+    </div>
+    <nav>
+      <a href="./index.html" aria-current="page">About</a>
+      <a href="./getting-started.html">Getting started</a>
+      <a href="https://github.com/your-org/flux" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <div style="display:flex; justify-content: space-between; align-items:center; gap:12px;">
+        <h1 style="margin:0;">About Flux</h1>
+        <span class="status-badge">Dev version 0.1.0.0</span>
+      </div>
+      <p class="muted" style="margin-top:8px;">
+        Fast and secure by design. This page renders README.md so your documentation stays the single source of truth.
+      </p>
+
+      <!-- README.md will be rendered into this container -->
+      <article id="readme" class="markdown" aria-live="polite">
+        <p class="muted">Loading documentation…</p>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:20px;">
+      <h2 style="margin-top:0;">Tips</h2>
+      <ul>
+        <li><strong>Keep a single source:</strong> Update README.md and it appears here automatically.</li>
+        <li><strong>Version visibly:</strong> The badge mirrors your current dev version.</li>
+        <li><strong>Portable:</strong> Works from file:// and static hosting; falls back gracefully.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Flux. Built with performance, privacy, and simplicity.
+  </footer>
+
+  <!-- Marked.js for Markdown rendering (tiny, reliable) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" integrity="" crossorigin="anonymous"></script>
+
+  <script>
+    (async function renderReadme() {
+      const container = document.getElementById('readme');
+
+      // Helper: show fallback content
+      const showFallback = (err) => {
+        container.innerHTML = `
+          <blockquote>
+            <strong>README.md not found.</strong><br>
+            Place a README.md next to index.html or update the fetch path below.
+          </blockquote>
+          <p class="muted">Error: ${err?.message ?? 'unknown'}</p>
+        `;
+      };
+
+      try {
+        // Adjust the path if README.md lives elsewhere (e.g., ./docs/README.md)
+        const res = await fetch('./README.md', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const md = await res.text();
+
+        // Configure Marked (safe-ish defaults)
+        marked.setOptions({
+          breaks: true,
+          gfm: true
+        });
+
+        const html = marked.parse(md);
+        container.innerHTML = html;
+
+        // Optional: convert any relative links to open in new tab
+        container.querySelectorAll('a[href]').forEach(a => {
+          const href = a.getAttribute('href');
+          if (href && !href.startsWith('#')) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener');
+          }
+        });
+      } catch (err) {
+        showFallback(err);
+      }
+    })();
+  </script>
+</body>
+</html>
