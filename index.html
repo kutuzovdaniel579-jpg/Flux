@@ -34,6 +34,12 @@
     }
     .brand { display: flex; align-items: center; gap: 10px; }
     .brand img { width: 28px; height: 28px; border-radius: 6px; }
+    img {
+  max-width: 100%;   /* past zich aan de breedte van de container aan */
+  height: auto;      /* behoudt de verhoudingen */
+  display: block;    /* voorkomt rare inline spacing */
+}
+
     .brand-title { font-weight: 600; letter-spacing: 0.2px; }
     nav { display: flex; gap: 14px; }
     main {
