@@ -218,7 +218,7 @@
       duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
       brave: `https://search.brave.com/search?q=${encodeURIComponent(q)}`,
       edge: `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
-      safari: `https://www.google.com/search?q=${encodeURIComponent(q)}` // Safari gebruikt Google standaard
+      safari: `safari://search?q=${encodeURIComponent(q)}` // opent Safari
     };
 
       window.location.href = urls[engine] || urls.google;
