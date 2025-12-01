@@ -94,12 +94,14 @@
       <h2 id="search-title">Search</h2>
       <form id="search-form" action="#" method="get">
         <input id="search-input" name="q" type="text" placeholder="Search the web…">
-        <select id="search-engine" name="engine">
-          <option value="google">Google</option>
-          <option value="duckduckgo">DuckDuckGo</option>
-          <option value="brave">Brave</option>
-          <option value="edge">Edge</option>
-        </select>
+       <select id="search-engine" name="engine">
+           <option value="google">Google</option>
+           <option value="duckduckgo">DuckDuckGo</option>
+           <option value="brave">Brave</option>
+           <option value="edge">Edge</option>
+           <option value="safari">Safari</option> <!-- nieuw -->
+      </select>
+
         <button id="search-button" type="submit">Go</button>
       </form>
     </section>
@@ -212,10 +214,13 @@
       const engine = document.getElementById('search-engine').value;
       if (!q) return;
       const urls = {
-        google: `https://www.google.com/search?q=${encodeURIComponent(q)}`,
-        duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
-        brave: `https://search.brave.com/search?q=${encodeURIComponent(q)}`
-      };
+      google: `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+      duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+      brave: `https://search.brave.com/search?q=${encodeURIComponent(q)}`,
+      edge: `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
+      safari: `https://www.google.com/search?q=${encodeURIComponent(q)}` // Safari gebruikt Google standaard
+    };
+
       window.location.href = urls[engine] || urls.google;
     });
 
