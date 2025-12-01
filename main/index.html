@@ -155,65 +155,65 @@
     </nav>
   </footer>
 
-  <script id="script-main">
-    // Central registry for IDs (quick lookup / future validations)
-    const IDS = {
-      root: 'html-root',
-      topbar: 'topbar-root',
-      searchInput: 'search-input',
-      searchEngine: 'search-engine',
-      quicklinksGrid: 'quicklinks-grid',
-      clockTime: 'clock-time',
-      notesTextarea: 'notes-textarea'
-    };
+<script id="script-main">
+  // Central registry for IDs (quick lookup / future validations)
+  const IDS = {
+    root: 'html-root',
+    topbar: 'topbar-root',
+    searchInput: 'search-input',
+    searchEngine: 'search-engine',
+    quicklinksGrid: 'quicklinks-grid',
+    clockTime: 'clock-time',
+    notesTextarea: 'notes-textarea'
+  };
 
-    // Theme toggler
-    const elThemeBtn = document.getElementById('topbar-btn-theme');
-    const elBody = document.getElementById('body-root');
-    elThemeBtn.addEventListener('click', () => {
-      const dark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#0f1320';
-      if (dark) {
-        document.documentElement.style.setProperty('--bg', '#f4f6fb');
-        document.documentElement.style.setProperty('--panel', '#ffffff');
-        document.documentElement.style.setProperty('--text', '#1b2338');
-        document.documentElement.style.setProperty('--muted', '#5c6b92');
-      } else {
-        document.documentElement.style.setProperty('--bg', '#0f1320');
-        document.documentElement.style.setProperty('--panel', '#1a2033');
-        document.documentElement.style.setProperty('--text', '#e8eefc');
-        document.documentElement.style.setProperty('--muted', '#aab4d4');
-      }
-    });
-
-    // Refresh button
-    document.getElementById('topbar-btn-refresh').addEventListener('click', () => location.reload());
-
-       // Settings button (hook point)
-    document.getElementById('topbar-btn-settings').addEventListener('click', () => {
-        window.location.href = "https://kutuzovdaniel579-jpg.github.io/Flux/settings";
-    });
-
-
-    // Clock updater
-    function updateClock() {
-      const el = document.getElementById('clock-time');
-      const d = new Date();
-      const hh = String(d.getHours()).padStart(2,'0');
-      const mm = String(d.getMinutes()).padStart(2,'0');
-      const ss = String(d.getSeconds()).padStart(2,'0');
-      const ms = String(d.getMilliseconds()).padStart(2,'0');
-      el.textContent = `${hh}:${mm}:${ss}:${ms}`;
+  // Theme toggler
+  const elThemeBtn = document.getElementById('topbar-btn-theme');
+  const elBody = document.getElementById('body-root');
+  elThemeBtn.addEventListener('click', () => {
+    const dark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#0f1320';
+    if (dark) {
+      document.documentElement.style.setProperty('--bg', '#f4f6fb');
+      document.documentElement.style.setProperty('--panel', '#ffffff');
+      document.documentElement.style.setProperty('--text', '#1b2338');
+      document.documentElement.style.setProperty('--muted', '#5c6b92');
+    } else {
+      document.documentElement.style.setProperty('--bg', '#0f1320');
+      document.documentElement.style.setProperty('--panel', '#1a2033');
+      document.documentElement.style.setProperty('--text', '#e8eefc');
+      document.documentElement.style.setProperty('--muted', '#aab4d4');
     }
-    updateClock();
-    setInterval(updateClock, 25);
+  });
 
-    // Search handler
-    document.getElementById('search-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = document.getElementById('search-input').value.trim();
-      const engine = document.getElementById('search-engine').value;
-      if (!q) return;
-      const urls = {
+  // Refresh button
+  document.getElementById('topbar-btn-refresh').addEventListener('click', () => location.reload());
+
+  // Settings button (hook point)
+  document.getElementById('topbar-btn-settings').addEventListener('click', () => {
+    window.location.href = "https://kutuzovdaniel579-jpg.github.io/Flux/settings";
+  });
+
+  // Clock updater
+  function updateClock() {
+    const el = document.getElementById('clock-time');
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    const ms = String(d.getMilliseconds()).padStart(2,'0');
+    el.textContent = `${hh}:${mm}:${ss}:${ms}`;
+  }
+  updateClock();
+  setInterval(updateClock, 25);
+
+  // Search handler
+  document.getElementById('search-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = document.getElementById('search-input').value.trim();
+    const engine = document.getElementById('search-engine').value;
+    if (!q) return;
+
+    const urls = {
       google: `https://www.google.com/search?q=${encodeURIComponent(q)}`,
       duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
       brave: `https://search.brave.com/search?q=${encodeURIComponent(q)}`,
@@ -221,16 +221,22 @@
       safari: `safari://search?q=${encodeURIComponent(q)}` // opent Safari
     };
 
-      window.location.href = urls[engine] || urls.google;
-    });
+    const targetUrl = urls[engine] || urls.google;
 
-    // Reset footer action
-    document.getElementById('footer-link-reset').addEventListener('click', () => {
-      if (confirm('Reset notes and UI?')) {
-        document.getElementById('notes-textarea').value = '';
-        alert('Reset done.');
-      }
-    });
-  </script>
-</body>
-</html>
+    // Check setting (default: nieuw tabblad)
+    const openInNewTab = localStorage.getItem('fluxOpenInNewTab') !== 'false';
+    if (openInNewTab) {
+      window.open(targetUrl, '_blank'); // nieuw tabblad
+    } else {
+      window.location.href = targetUrl; // huidig tabblad
+    }
+  });
+
+  // Reset footer action
+  document.getElementById('footer-link-reset').addEventListener('click', () => {
+    if (confirm('Reset notes and UI?')) {
+      document.getElementById('notes-textarea').value = '';
+      alert('Reset done.');
+    }
+  });
+</script>
