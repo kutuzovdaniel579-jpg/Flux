@@ -85,6 +85,7 @@
     <button id="topbar-btn-refresh" type="button">Refresh</button>
     <button id="topbar-btn-theme" type="button">Toggle Theme</button>
     <button id="topbar-btn-settings" type="button">Settings</button>
+    <button id="topbar-btn-links" type="button">Links</button>
   </header>
 
   <!-- Main content -->
@@ -197,6 +198,11 @@
   // Settings button (hook point)
   document.getElementById('topbar-btn-settings').addEventListener('click', () => {
     window.location.href = "https://kutuzovdaniel579-jpg.github.io/Flux/settings";
+  });
+  
+  // Links button (hook point)
+  document.getElementById('topbar-btn-links').addEventListener('click', () => {
+    window.location.href = "https://kutuzovdaniel579-jpg.github.io/Flux/links";
   });
 
   // Clock updater
